@@ -28,24 +28,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.gittestapp.R
-import com.example.gittestapp.viewmodel.SchoolListViewModel
+import com.example.gittestapp.navigation.Route
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController, schoolListViewModel: SchoolListViewModel) {
+fun SplashScreen(navController: NavController) {
 
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnim = animateFloatAsState(
-        targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(
+        targetValue = if (startAnimation) 1f else 0f, animationSpec = tween(
             durationMillis = 1000
         )
     )
 
     LaunchedEffect(key1 = true) {
         startAnimation = true
-        schoolListViewModel.getSchoolList()
-        schoolListViewModel.getSchoolDetails()
-        //delay(3000)
+        delay(3000)
+        navController.navigate(Route.SCHOOL_LIST.name)
     }
 
     Surface(
@@ -68,9 +67,7 @@ fun SplashScreen(navController: NavController, schoolListViewModel: SchoolListVi
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Welcome to YourApp",
-                fontSize = 24.sp,
-                color = Color.Black
+                text = "Welcome to YourApp", fontSize = 24.sp, color = Color.Black
             )
         }
     }
